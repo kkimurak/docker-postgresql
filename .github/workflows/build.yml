@@ -28,9 +28,9 @@ jobs:
         uses: docker/metadata-action@v3
         with:
           images: |
-            sameersbn/postgresql
-            quay.io/sameersbn/postgresql
-            ghcr.io/sameersbn/postgresql
+            kkimurak/sameersbn-postgresql
+            quay.io/kkimurak/sameersbn-postgresql
+            ghcr.io/kkimurak/sameersbn-postgresql
           tags: |
             type=match,pattern=\d+
             type=match,pattern=(.*)

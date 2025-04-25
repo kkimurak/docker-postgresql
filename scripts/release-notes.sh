@@ -25,10 +25,10 @@ fi
 cat <<EOF
 ${NOTABLE_CHANGES}
 
-## Docker Images for sameersbn/postgresql:${RELEASE}
+## Docker Images for kkimurak/sameersbn-postgresql:${RELEASE}
 
-- [docker.io](https://hub.docker.com/r/sameersbn/postgresql/tags)
-- [quay.io](https://quay.io/repository/sameersbn/postgresql?tag=${RELEASE}&tab=tags)
+- [docker.io](https://hub.docker.com/r/kkimurak/sameersbn-postgresql/tags)
+- [quay.io](https://quay.io/repository/kkimurak/sameersbn-postgresql?tag=${RELEASE}&tab=tags)
 
 ## Installation
 
