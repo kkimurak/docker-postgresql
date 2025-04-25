@@ -1,30 +1,30 @@
 # sameersbn/postgresql:15-20230628
 
 - [Introduction](#introduction)
-  - [Contributing](#contributing)
-  - [Issues](#issues)
+    - [Contributing](#contributing)
+    - [Issues](#issues)
 - [Getting started](#getting-started)
-  - [Installation](#installation)
-  - [Quickstart](#quickstart)
-  - [Persistence](#persistence)
-  - [Trusting local connections](#trusting-local-connections)
-  - [Setting `postgres` user password](#setting-postgres-user-password)
-  - [Creating database user](#creating-database-user)
-  - [Creating databases](#creating-databases)
-  - [Granting user access to a database](#granting-user-access-to-a-database)
-  - [Enabling extensions](#enabling-extensions)
-  - [Creating replication user](#creating-replication-user)
-  - [Setting up a replication cluster](#setting-up-a-replication-cluster)
-  - [Creating a snapshot](#creating-a-snapshot)
-  - [Creating a backup](#creating-a-backup)
-  - [Command-line arguments](#command-line-arguments)
-  - [Logs](#logs)
-  - [UID/GID mapping](#uidgid-mapping)
+    - [Installation](#installation)
+    - [Quickstart](#quickstart)
+    - [Persistence](#persistence)
+    - [Trusting local connections](#trusting-local-connections)
+    - [Setting `postgres` user password](#setting-postgres-user-password)
+    - [Creating database user](#creating-database-user)
+    - [Creating databases](#creating-databases)
+    - [Granting user access to a database](#granting-user-access-to-a-database)
+    - [Enabling extensions](#enabling-extensions)
+    - [Creating replication user](#creating-replication-user)
+    - [Setting up a replication cluster](#setting-up-a-replication-cluster)
+    - [Creating a snapshot](#creating-a-snapshot)
+    - [Creating a backup](#creating-a-backup)
+    - [Command-line arguments](#command-line-arguments)
+    - [Logs](#logs)
+    - [UID/GID mapping](#uidgid-mapping)
 - [Maintenance](#maintenance)
-  - [Upgrading](#upgrading)
-  - [Shell Access](#shell-access)
+    - [Upgrading](#upgrading)
+    - [Shell Access](#shell-access)
 
-# Introduction
+## Introduction
 
 `Dockerfile` to create a [Docker](https://www.docker.com/) container image for [PostgreSQL](http://postgresql.org/).
 
@@ -50,7 +50,7 @@ If the above recommendations do not help then [report your issue](../../issues/n
 - The `docker run` command or `docker-compose.yml` used to start the image. Mask out the sensitive bits.
 - Please state if you are using [Boot2Docker](http://www.boot2docker.io), [VirtualBox](https://www.virtualbox.org), etc.
 
-# Getting started
+## Getting started
 
 ## Installation
 
@@ -124,7 +124,6 @@ docker run --name postgresql -itd --restart always \
   sameersbn/postgresql:15-20230628
 ```
 
-
 > **Note**
 >
 > - When [persistence](#persistence) is in use, `PG_PASSWORD` is effective on the first run.
@@ -182,7 +181,7 @@ docker run --name postgresql -itd --restart always \
 
 In the above example `dbuser` with be granted access to both the `dbname1` and `dbname2` databases.
 
-# Enabling extensions
+## Enabling extensions
 
 The image also packages the [postgres contrib module](http://www.postgresql.org/docs/9.4/static/contrib.html). A comma separated list of modules can be specified using the `DB_EXTENSION` parameter.
 
@@ -258,9 +257,9 @@ And just like that with minimal effort you have a PostgreSQL replication cluster
 
 Here are some important notes about a PostgreSQL replication cluster:
 
- - Writes can only occur on the master
- - Slaves are read-only
- - For best performance, limit the reads to the slave nodes
+- Writes can only occur on the master
+- Slaves are read-only
+- For best performance, limit the reads to the slave nodes
 
 ## Creating a snapshot
 
@@ -327,7 +326,7 @@ To access the PostgreSQL logs you can use `docker exec`. For example:
 docker exec -it postgresql tail -f /var/log/postgresql/postgresql-9.4-main.log
 ```
 
-# UID/GID mapping
+## UID/GID mapping
 
 The files and processes created by the container are owned by the `postgres` user that is internal to the container. In the absense of user namespace in docker the UID and GID of the containers `postgres` user may have different meaning on the host.
 
@@ -343,39 +342,39 @@ docker run --name postgresql -itd --restart always \
   sameersbn/postgresql:15-20230628
 ```
 
-# Maintenance
+## Maintenance
 
-## Upgrading
+### Upgrading
 
 To upgrade to newer releases:
 
   1. Download the updated Docker image:
+  
+      ```bash
+      docker pull sameersbn/postgresql:15-20230628
+      ```
 
-  ```bash
-  docker pull sameersbn/postgresql:15-20230628
-  ```
+  1. Stop the currently running image:
 
-  2. Stop the currently running image:
+      ```bash
+      docker stop postgresql
+      ```
 
-  ```bash
-  docker stop postgresql
-  ```
+  1. Remove the stopped container
 
-  3. Remove the stopped container
+      ```bash
+      docker rm -v postgresql
+      ```
 
-  ```bash
-  docker rm -v postgresql
-  ```
+  1. Start the updated image
 
-  4. Start the updated image
+      ```bash
+      docker run --name postgresql -itd \
+        [OPTIONS] \
+        sameersbn/postgresql:15-20230628
+      ```
 
-  ```bash
-  docker run --name postgresql -itd \
-    [OPTIONS] \
-    sameersbn/postgresql:15-20230628
-  ```
-
-## Shell Access
+### Shell Access
 
 For debugging and maintenance purposes you may want access the containers shell. If you are using Docker version `1.3.0` or higher you can access a running containers shell by starting `bash` using `docker exec`:
 
