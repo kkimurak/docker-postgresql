@@ -2,7 +2,7 @@
 
 This is a fork of [sameersbn/postgresql](https://github.com/sameersbn/docker-postgresql) aiming to provide regular builds. Changes should be kept to a minimum and pull requests should be sent upstream whenever appropriate.
 
-In the document, please replace ${VERSION} with the image tag. The latest image tag is `15-20230628`.
+In the document, please replace ${VERSION} with the image tag.
 
 - [Introduction](#introduction)
     - [Contributing](#contributing)
