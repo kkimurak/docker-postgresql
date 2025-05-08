@@ -6,6 +6,7 @@ BUILD_DATE=$(date +%Y%m%d)
 for POSTGRES_MAJOR_VERSION in {13..17}
 do
     git switch "${POSTGRES_MAJOR_VERSION}-build"
+    git merge --no-ff --no-edit develop
     IMAGE_TAG="${POSTGRES_MAJOR_VERSION}-${BUILD_DATE}"
     echo "${IMAGE_TAG}" | tee VERSION
     sed -i Dockerfile -e "s/PG_VERSION=.*/PG_VERSION=${POSTGRES_MAJOR_VERSION} \\\/g"
