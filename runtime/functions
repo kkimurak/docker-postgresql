@@ -342,6 +342,9 @@ create_database() {
           if [[ -n ${DB_USER} ]]; then
             echo "‣ Granting access to ${DB_USER} user..."
             psql -U ${PG_USER} -c "GRANT ALL PRIVILEGES ON DATABASE \"${database}\" to \"${DB_USER}\";" >/dev/null
+
+            echo "‣ Granting access on public schema to user '${DB_USER}'"
+            psql -U ${PG_USER} -c "GRANT ALL ON SCHEMA public TO \"${DB_USER}\";" -d "${database}" >/dev/null
           fi
         done
         ;;
