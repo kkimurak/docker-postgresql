@@ -182,6 +182,8 @@ docker run --name postgresql -itd --restart always \
 
 In the above example `dbuser` with be granted access to both the `dbname1` and `dbname2` databases.
 
+If you want `DB_USER` to have ownership of database listed in `DB_NAME`, you can set `DB_USER_IS_DB_OWNER` to true.
+
 # Enabling extensions
 
 The image also packages the [postgres contrib module](http://www.postgresql.org/docs/9.4/static/contrib.html). A comma separated list of modules can be specified using the `DB_EXTENSION` parameter.
