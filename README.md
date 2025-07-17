@@ -185,6 +185,8 @@ docker run --name postgresql -itd --restart always \
 
 In the above example `dbuser` with be granted access to both the `dbname1` and `dbname2` databases.
 
+If you want `DB_USER` to have ownership of database listed in `DB_NAME`, you can set `DB_USER_IS_DB_NAME` to true.
+
 ## Enabling extensions
 
 The image also packages the [postgres contrib module](http://www.postgresql.org/docs/9.4/static/contrib.html). A comma separated list of modules can be specified using the `DB_EXTENSION` parameter.
@@ -196,6 +198,8 @@ docker run --name postgresql -itd \
 ```
 
 The above command enables the `unaccent` and `pg_trgm` modules on the databases listed in `DB_NAME`, namely `db1` and `db2`.
+
+Each comma separated field can contain whitespace, allowing you to set arbitrary options (such as `CASCADE` ). For full syntax, refer official documentation about [CREATE EXTENSION](https://www.postgresql.org/docs/current/sql-createextension.html).
 
 > **NOTE**:
 >
