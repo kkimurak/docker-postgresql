@@ -318,10 +318,13 @@ load_extensions() {
     psql -U ${PG_USER} -d ${database} -c "CREATE EXTENSION IF NOT EXISTS unaccent;" >/dev/null 2>&1
   fi
 
-  for extension in $(awk -F',' '{for (i = 1 ; i <= NF ; i++) print $i}' <<< "${DB_EXTENSION}"); do
+  IFS_ORG=$IFS
+  IFS=,
+  for extension in ${DB_EXTENSION}; do
     echo "‣ Loading ${extension} extension..."
     psql -U ${PG_USER} -d ${database} -c "CREATE EXTENSION IF NOT EXISTS ${extension};" >/dev/null 2>&1
   done
+  IFS=$IFS_ORG
 }
 
 create_database() {
@@ -331,7 +334,9 @@ create_database() {
         echo "INFO! Database cannot be created on a $REPLICATION_MODE node. Skipping..."
         ;;
       *)
-        for database in $(awk -F',' '{for (i = 1 ; i <= NF ; i++) print $i}' <<< "${DB_NAME}"); do
+        IFS_ORG=$IFS
+        IFS=,
+        for database in ${DB_NAME}; do
           echo "Creating database: ${database}..."
           if [[ -z $(psql -U ${PG_USER} -Atc "SELECT 1 FROM pg_catalog.pg_database WHERE datname = '${database}'";) ]]; then
             psql -U ${PG_USER} -c "CREATE DATABASE \"${database}\" WITH TEMPLATE = \"${DB_TEMPLATE}\";" >/dev/null
@@ -347,6 +352,7 @@ create_database() {
             psql -U ${PG_USER} -c "GRANT ALL ON SCHEMA public TO \"${DB_USER}\";" -d "${database}" >/dev/null
           fi
         done
+        IFS=$IFS_ORG
         ;;
     esac
   fi

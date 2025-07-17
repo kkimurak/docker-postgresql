@@ -197,6 +197,8 @@ docker run --name postgresql -itd \
 
 The above command enables the `unaccent` and `pg_trgm` modules on the databases listed in `DB_NAME`, namely `db1` and `db2`.
 
+Each comma separated field can contain whitespace, allowing you to set arbitrary options (such as `CASCADE` ). For full syntax, refer official documentation about [CREATE EXTENSION](https://www.postgresql.org/docs/current/sql-createextension.html).
+
 > **NOTE**:
 >
 > This option deprecates the `DB_UNACCENT` parameter.
