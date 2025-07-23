@@ -318,13 +318,14 @@ load_extensions() {
     psql -U ${PG_USER} -d ${database} -c "CREATE EXTENSION IF NOT EXISTS unaccent;" >/dev/null 2>&1
   fi
 
-  IFS_ORG=$IFS
+  
+  IFS_ORG2=$IFS
   IFS=,
   for extension in ${DB_EXTENSION}; do
     echo "‣ Loading ${extension} extension..."
     psql -U ${PG_USER} -d ${database} -c "CREATE EXTENSION IF NOT EXISTS ${extension};" >/dev/null 2>&1
   done
-  IFS=$IFS_ORG
+  IFS=$IFS_ORG2
 }
 
 create_database() {
