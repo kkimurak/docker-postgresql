@@ -185,7 +185,7 @@ docker run --name postgresql -itd --restart always \
 
 In the above example `dbuser` with be granted access to both the `dbname1` and `dbname2` databases.
 
-If you want `DB_USER` to have ownership of database listed in `DB_NAME`, you can set `DB_USER_IS_DB_NAME` to true.
+If you want `DB_USER` to have ownership of database listed in `DB_NAME`, you can set `DB_USER_IS_DB_OWNER` to true.
 
 ## Enabling extensions
 
