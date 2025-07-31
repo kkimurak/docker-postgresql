@@ -318,7 +318,7 @@ load_extensions() {
     psql -U ${PG_USER} -d ${database} -c "CREATE EXTENSION IF NOT EXISTS unaccent;" >/dev/null 2>&1
   fi
 
-  IFS_ORG=$IFS
+  local IFS_ORG=$IFS
   IFS=,
   for extension in ${DB_EXTENSION}; do
     echo "‣ Loading ${extension} extension..."
@@ -334,7 +334,7 @@ create_database() {
         echo "INFO! Database cannot be created on a $REPLICATION_MODE node. Skipping..."
         ;;
       *)
-        IFS_ORG=$IFS
+        local IFS_ORG=$IFS
         IFS=,
         for database in ${DB_NAME}; do
           echo "Creating database: ${database}..."
