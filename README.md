@@ -60,8 +60,6 @@ If the above recommendations do not help then [report your issue](../../issues/n
 
 Automated builds of the image are available on [Dockerhub](https://hub.docker.com/r/kkimurak/sameersbn-postgresql) and is the recommended method of installation.
 
-> **Note**: Builds are also available on [Quay.io](https://quay.io/repository/kkimurak/sameersbn-postgresql)
-
 ```bash
 docker pull kkimurak/sameersbn-postgresql:${VERSION}
 ```
@@ -69,7 +67,7 @@ docker pull kkimurak/sameersbn-postgresql:${VERSION}
 Alternatively you can build the image yourself.
 
 ```bash
-docker build -t kkimurak/sameersbn-postgresql github.com/sameersbn/docker-postgresql
+docker build -t kkimurak/sameersbn-postgresql github.com/kkimurak/docker-postgresql
 ```
 
 ## Quickstart
