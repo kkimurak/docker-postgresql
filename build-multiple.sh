@@ -3,7 +3,7 @@
 set -Ceu
 IMAGE_NAME="kkimurak/sameersbn-postgresql"
 BUILD_DATE=$(date +%Y%m%d)
-for POSTGRES_MAJOR_VERSION in {13..17}
+for POSTGRES_MAJOR_VERSION in {13..18}
 do
     git switch "${POSTGRES_MAJOR_VERSION}-build"
     git merge --no-ff --no-edit develop
