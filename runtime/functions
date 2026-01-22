@@ -76,6 +76,28 @@ set_postgresql_param() {
   fi
 }
 
+set_postgresql_param_from_env_var() {
+  local verbosity=${1:-verbose}
+  env | grep -e "^PG_PARAM_" | while read -r line; do
+    # here we can get set of environment parameter and its value like:
+    # PG_PARAM_KEY_NAME=value
+
+    # get param name : left side of =
+    param_name=${line%=*}
+    echo "‣ Extracting environment variable ${param_name}"
+    # convert PG_PARAM_KEY_NAME to key_name
+    ## remove prefix PG_PARAM_
+    key=${param_name/PG_PARAM_/}
+    ## make lowercase
+    key=${key,,}
+
+    # get value : right side of =
+    value=${line#*=}
+
+    set_postgresql_param "${key}" "${value}" "${verbosity}"
+  done
+}
+
 set_recovery_param() {
   local key=${1}
   local value=${2}
@@ -404,4 +426,6 @@ configure_postgresql() {
 
   # listen on all interfaces
   set_postgresql_param "listen_addresses" "*" quiet
+
+  set_postgresql_param_from_env_var verbose
 }
