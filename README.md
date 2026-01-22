@@ -20,6 +20,7 @@
   - [Command-line arguments](#command-line-arguments)
   - [Logs](#logs)
   - [UID/GID mapping](#uidgid-mapping)
+  - [Setting custom postgresql.conf parameter](#setting-custom-postgresqlconf-parameter)
 - [Maintenance](#maintenance)
   - [Upgrading](#upgrading)
   - [Shell Access](#shell-access)
@@ -342,6 +343,12 @@ docker run --name postgresql -itd --restart always \
   --env 'USERMAP_UID=999' --env 'USERMAP_GID=999' \
   sameersbn/postgresql:15-20230628
 ```
+
+## Setting custom postgresql.conf parameter
+
+If you want to set custom parameter to postgresql.conf, you can set environment variable prefixed with `PG_PARAM_`.  
+For example, setting environment variable `PG_PARAM_EXAMPLE_PARAM=example_value` will set `example_param = example_value` in `postgresql.conf`.  
+Please note that it may conflict to existing parameter such as `PG_SSL` (`ssl` in postgresql.conf, which is also set by setting `PG_PARAM_SSL`).
 
 # Maintenance
 
