@@ -266,6 +266,28 @@ initialize_database() {
       set_postgresql_param "dynamic_shared_memory_type" "sysv"
     fi
   fi
+  
+  # enable / disable checksum based on env-var
+  echo -n "‣ Setting checksum (PG_ENABLE_CHECKSUMS = ${PG_ENABLE_CHECKSUMS}): "
+  if exec_as_postgres "${PG_BINDIR}/pg_checksums" -D "${PG_DATADIR}" --check 2>/dev/null >/dev/null ; then
+    # pg_checksums returns zero status when checksum is enabled
+    # enable on new DB as well
+    if [[ "${PG_ENABLE_CHECKSUMS}" == "true" ]]; then
+      echo "already enabled. Skipping.."
+    else 
+      exec_as_postgres "${PG_BINDIR}/pg_checksums" -D "${PG_DATADIR}" --disable
+      echo "done."
+    fi
+  else
+    # pg_checksums returns non-zero status when checksum is disabled
+    # so disable on new DB as well
+    if [[ "${PG_ENABLE_CHECKSUMS}" == "false" ]]; then
+      echo "already disabled. Skipping.."
+    else
+      exec_as_postgres "${PG_BINDIR}/pg_checksums" -D "${PG_DATADIR}" --enable
+      echo "done."
+    fi
+  fi
 
   # configure path to data_directory
   set_postgresql_param "data_directory" "${PG_DATADIR}"
