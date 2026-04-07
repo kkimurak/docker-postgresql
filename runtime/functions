@@ -222,6 +222,32 @@ initialize_database() {
           PG_OLD_HBA_CONF=${PG_OLD_DATADIR}/pg_hba.conf
           PG_OLD_IDENT_CONF=${PG_OLD_DATADIR}/pg_ident.conf
 
+          # Reset checksums on new DB to adopt migration source DB
+          echo -n "‣ Pre-migration - checking checksum status on old DB ${PG_OLD_DATADIR}: "
+          if exec_as_postgres "${PG_OLD_BINDIR}/pg_checksums" -D "${PG_OLD_DATADIR}" --check 2>/dev/null >/dev/null ; then
+            # pg_checksums returns zero status when checksum is enabled
+            # enable on new DB as well
+            echo "enabled."
+            echo -n "Enabling checksums on new DB ${PB_DATA_DIR}.."
+            if exec_as_postgres "${PG_BINDIR}/pg_checksums" -D "${PG_DATADIR}" --check 2>/dev/null >/dev/null; then
+              echo "already enabled. skipping.."
+            else
+              exec_as_postgres "${PG_BINDIR}/pg_checksums" -D "${PG_DATADIR}" --enable
+              echo "done."
+            fi
+          else
+            # pg_checksums returns non-zero status when checksum is disabled
+            # so disable on new DB as well
+            echo "disabled."
+            echo -n "Disabling checksums on new DB ${PB_DATA_DIR}.."
+            if exec_as_postgres "${PG_BINDIR}/pg_checksums" -D "${PG_DATADIR}" --check 2>/dev/null >/dev/null; then
+              exec_as_postgres "${PG_BINDIR}/pg_checksums" -D "${PG_DATADIR}" --disable
+              echo "done."
+            else
+              echo "already disabled. skipping.."
+            fi
+          fi
+
           echo -n "‣ Migration in progress. Please be patient..."
           exec_as_postgres ${PG_BINDIR}/pg_upgrade \
             -b ${PG_OLD_BINDIR} -B ${PG_BINDIR} \
