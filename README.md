@@ -11,6 +11,7 @@
   - [Setting `postgres` user password](#setting-postgres-user-password)
   - [Creating database user](#creating-database-user)
   - [Creating databases](#creating-databases)
+  - [Setting checksums](#setting-checksums)
   - [Granting user access to a database](#granting-user-access-to-a-database)
   - [Enabling extensions](#enabling-extensions)
   - [Creating replication user](#creating-replication-user)
@@ -168,6 +169,12 @@ docker run --name postgresql -itd --restart always \
   --env 'DB_NAME=dbname1,dbname2' \
   sameersbn/postgresql:15-20230628
 ```
+
+## Setting checksums
+
+You can control checksums feature by setting `PG_ENABLE_CHECKSUM` to `true` or `false`. This variable is set to `false` (disable) by default.
+
+For more details about checksums, see [official documentation](https://www.postgresql.org/docs/current/checksums.html).
 
 ## Granting user access to a database
 
@@ -374,6 +381,9 @@ To upgrade to newer releases:
     [OPTIONS] \
     sameersbn/postgresql:15-20230628
   ```
+
+Before upgrade, the checksums status on old cluster will be checked and automatically applied to new cluster to achieve safe upgrade.  
+After upgrade, the checksums status on new cluster will be set based on environment variable [`PG_ENABLE_CHECKSUMS`](#setting-checksums).
 
 ## Shell Access
 
