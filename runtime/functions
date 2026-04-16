@@ -438,14 +438,14 @@ configure_postgresql() {
   # start postgres server internally for the creation of users and databases
   rm -rf ${PG_DATADIR}/postmaster.pid
   set_postgresql_param "listen_addresses" "127.0.0.1" quiet
-  exec_as_postgres ${PG_BINDIR}/pg_ctl -D ${PG_DATADIR} -w start >/dev/null
+  exec_as_postgres ${PG_BINDIR}/pg_ctl -D ${PG_DATADIR} -w start >> "${PG_LOGDIR}/postgresql-${PG_VERSION}-internal.log"
 
   create_user
   create_database
   create_replication_user
 
   # stop the postgres server
-  exec_as_postgres ${PG_BINDIR}/pg_ctl -D ${PG_DATADIR} -w stop >/dev/null
+  exec_as_postgres ${PG_BINDIR}/pg_ctl -D ${PG_DATADIR} -w stop >> "${PG_LOGDIR}/postgresql-${PG_VERSION}-internal.log"
 
   # listen on all interfaces
   set_postgresql_param "listen_addresses" "*" quiet
