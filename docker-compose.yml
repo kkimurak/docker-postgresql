@@ -1,22 +1,26 @@
-PostgreSQL:
-  restart: always
-  image: sameersbn/postgresql:15-20230628
-  ports:
-    - "5432:5432"
-  environment:
-    - DEBUG=false
+services:
+  postgresql:
+    restart: always
+    image: sameersbn/postgresql:15-20230628
+    ports:
+      - "5432:5432"
+    environment:
+      - DEBUG=false
 
-    - DB_USER=
-    - DB_PASS=
-    - DB_NAME=
-    - DB_TEMPLATE=
+      - DB_USER=
+      - DB_PASS=
+      - DB_NAME=
+      - DB_TEMPLATE=
 
-    - DB_EXTENSION=
+      - DB_EXTENSION=
 
-    - REPLICATION_MODE=
-    - REPLICATION_USER=
-    - REPLICATION_PASS=
-    - REPLICATION_SSLMODE=
-  command: "--wal_keep_segments=32 --logging_collector=off"
-  volumes:
-    - postgresql:/var/lib/postgresql
+      - REPLICATION_MODE=
+      - REPLICATION_USER=
+      - REPLICATION_PASS=
+      - REPLICATION_SSLMODE=
+    command: "--logging_collector=off"
+    volumes:
+      - postgresql:/var/lib/postgresql
+
+volumes:
+  postgresql:
