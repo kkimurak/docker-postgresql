@@ -174,7 +174,7 @@ docker run --name postgresql -itd --restart always \
 
 ## Setting checksums
 
-You can control checksums feature by setting `PG_ENABLE_CHECKSUM` to `true` or `false`. This variable is set to `false` (disable) by default.
+You can control checksums feature by setting `PG_ENABLE_CHECKSUMS` to `true` or `false`. This variable is set to `false` (disable) by default.
 
 For more details about checksums, see [official documentation](https://www.postgresql.org/docs/current/checksums.html).
 
