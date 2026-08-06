@@ -1,11 +1,11 @@
-FROM ubuntu:noble-20260610 AS add-apt-repositories
+FROM ubuntu:noble-20260730.1 AS add-apt-repositories
 
 RUN apt-get update \
  && DEBIAN_FRONTEND=noninteractive apt-get install -y wget gnupg \
  && wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor -o /etc/apt/trusted.gpg.d/apt.postgresql.org.gpg \
  && echo 'deb [signed-by=/etc/apt/trusted.gpg.d/apt.postgresql.org.gpg] http://apt.postgresql.org/pub/repos/apt/ noble-pgdg main' >> /etc/apt/sources.list
 
-FROM ubuntu:noble-20260610
+FROM ubuntu:noble-20260730.1
 
 LABEL maintainer="sameer@damagehead.com"
 
