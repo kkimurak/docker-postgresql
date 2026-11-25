@@ -10,7 +10,7 @@ FROM ubuntu:noble-20261110.1
 LABEL maintainer="sameer@damagehead.com"
 
 ENV PG_APP_HOME="/etc/docker-postgresql" \
-    PG_VERSION=15 \
+    PG_VERSION=19 \
     PG_USER=postgres \
     PG_HOME=/var/lib/postgresql \
     PG_RUNDIR=/run/postgresql \
